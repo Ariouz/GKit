@@ -4,7 +4,7 @@ import picocli.CommandLine.Command;
 
 @Command(
 		name = "gkit",
-		description = "GKit - Unlock full GraalVM potential on your project",
+		description = "GKit - GraalVM native builds, simplified.",
 		mixinStandardHelpOptions = true,
 		version = "GKit v0.0.1",
 		subcommands = {
