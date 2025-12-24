@@ -25,7 +25,7 @@ public class YamlErrorFormatter {
 					.append("\n");
 		}
 
-		if (e.getProblem() != null && e.getContext().contains("Cannot create property")) {
+		if (e.getContext() != null && e.getContext().contains("Cannot create property")) {
 			sb.append("\nHint: Check for typos or unsupported fields in gkit.yml\n");
 		}
 
