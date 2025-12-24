@@ -8,7 +8,7 @@ import picocli.CommandLine.Command;
 		mixinStandardHelpOptions = true,
 		version = "GKit v0.0.1",
 		subcommands = {
-
+			CheckConfigCommand.class
 		}
 )
 public class GKitCommand implements Runnable {
