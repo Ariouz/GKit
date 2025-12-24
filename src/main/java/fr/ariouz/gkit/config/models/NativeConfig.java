@@ -1,11 +1,12 @@
-package fr.ariouz.gkit.config;
+package fr.ariouz.gkit.config.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NativeConfig {
 
 	private String output;
-	private List<String> buildArgs;
+	private List<String> buildArgs = new ArrayList<>();
 
 	public String getOutput() {
 		return output;

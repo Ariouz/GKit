@@ -1,12 +1,12 @@
-package fr.ariouz.gkit.config;
+package fr.ariouz.gkit.config.models;
 
 import java.util.HashMap;
 
 public class GKitConfig {
 
-	private ProjectConfig project;
-	private BuildConfig build;
-	private NativeConfig nativeImage;
+	private ProjectConfig project = new ProjectConfig();
+	private BuildConfig build = new BuildConfig();
+	private NativeConfig nativeImage = new NativeConfig();
 	private HashMap<String, GKitConfig> profiles;
 
 	public ProjectConfig getProject() {

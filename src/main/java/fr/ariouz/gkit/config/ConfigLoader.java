@@ -1,5 +1,6 @@
 package fr.ariouz.gkit.config;
 
+import fr.ariouz.gkit.config.models.GKitConfig;
 import fr.ariouz.gkit.util.YamlErrorFormatter;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -12,17 +13,7 @@ import java.nio.file.Path;
 
 public class ConfigLoader {
 
-	public static GKitConfig load(String profile) {
-		try {
-			return loadConfig(profile);
-		} catch (Exception e) {
-			System.err.println("Error: " + e.getMessage());
-			System.exit(1);
-		}
-		return null;
-	}
-
-	private static GKitConfig loadConfig(String profile) {
+	public static GKitConfig load(String profile) throws ConfigException{
 		Path path = Path.of("gkit.yml");
 
 		if (!Files.exists(path)) {
@@ -37,13 +28,14 @@ public class ConfigLoader {
 
 			GKitConfig base = yaml.load(input);
 
+			if (base == null) throw new ConfigException("gkit.yml seems to be empty");
 			if (profile == null || base.getProfiles() == null) {
 				return base;
 			}
 
 			GKitConfig profileConfig = base.getProfile(profile);
 			if (profileConfig == null) {
-				throw new RuntimeException("Profile '"+profile+"' not found");
+				throw new ConfigException("Profile '"+profile+"' not found");
 			}
 
 			return ConfigMerger.merge(base, profileConfig);
@@ -51,7 +43,7 @@ public class ConfigLoader {
 		} catch (MarkedYAMLException e) {
 			throw YamlErrorFormatter.formatYamlError(e);
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to load config: " + e.getMessage(), e);
+			throw new ConfigException("Failed to load config: " + e.getMessage(), e);
 		}
 	}
 

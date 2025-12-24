@@ -1,10 +1,11 @@
 package fr.ariouz.gkit.util;
 
+import fr.ariouz.gkit.config.ConfigException;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 
 public class YamlErrorFormatter {
 
-	public static RuntimeException formatYamlError(MarkedYAMLException e) {
+	public static ConfigException formatYamlError(MarkedYAMLException e) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Invalid gkit.yml\n\n");
@@ -28,7 +29,7 @@ public class YamlErrorFormatter {
 			sb.append("\nHint: Check for typos or unsupported fields in gkit.yml\n");
 		}
 
-		return new RuntimeException(sb.toString());
+		return new ConfigException(sb.toString());
 	}
 
 }

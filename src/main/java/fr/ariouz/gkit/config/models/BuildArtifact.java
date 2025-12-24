@@ -1,4 +1,4 @@
-package fr.ariouz.gkit.config;
+package fr.ariouz.gkit.config.models;
 
 public class BuildArtifact {
 
