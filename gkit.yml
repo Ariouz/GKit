@@ -1,0 +1,33 @@
+project:
+  name: native-output
+  mainClass: fr.ariouz.gkit.Main
+  version: "0.0.1"
+
+build:
+  # optional: project root dir, by default .
+  projectDir: .
+  artifact:
+    # optional: build command, if absent, no pre-build command will be run, however a jar file MUST exist
+    command: "mvn clean package"
+    # required: jar file path
+    path: "target/gkit-0.0.1.jar"
+
+nativeImage:
+  output: "target/native-file"
+  # optional: additional build args; empty by default
+  buildArgs:
+    - "--no-fallback"
+
+# profiles override global values
+# gkit build --profile dev
+# check build with profile applied:
+# gkit check-config --profile dev
+profiles:
+  dev:
+    project:
+      version: "0.0.1-dev"
+    build:
+      artifact:
+        path: "target/gkit-0.0.1.jar"
+    nativeImage:
+      output: "target/native-file-dev"
