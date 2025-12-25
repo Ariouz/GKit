@@ -24,11 +24,8 @@ public class CheckConfigCommand implements Callable<Integer> {
 
 	@Override
 	public Integer call() {
-		GKitConfig config;
-
 		try {
-			if (profile == null) config = ConfigLoader.load(null);
-			else config = ConfigLoader.load(profile);
+			GKitConfig config = ConfigLoader.load(profile);
 
 			System.out.println("Config loaded successfully");
 			System.out.println("Active profile: " + profile);
