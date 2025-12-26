@@ -2,8 +2,8 @@ package fr.ariouz.gkit.config.models;
 
 public class BuildArtifact {
 
-	public String command;
-	public String path;
+	private String command;
+	private String path;
 
 	public String getCommand() {
 		return command;

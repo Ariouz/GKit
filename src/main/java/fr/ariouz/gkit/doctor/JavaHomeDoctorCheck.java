@@ -24,9 +24,9 @@ public class JavaHomeDoctorCheck extends  AbstractDoctorCheck{
 	@Override
 	protected String getStatusMessage(DoctorStatus status) {
 		return switch (status) {
-			case SUCCESS -> "Is a GraalVM installation";
-			case WARNING -> "Is not a GraalVM installation";
-			case ERROR -> "Not set";
+			case SUCCESS 	-> "Is a GraalVM installation";
+			case WARNING 	-> "Not a GraalVM installation";
+			case ERROR 		-> "Not set";
 		};
 	}
 

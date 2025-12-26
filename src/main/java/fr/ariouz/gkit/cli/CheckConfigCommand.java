@@ -4,6 +4,7 @@ package fr.ariouz.gkit.cli;
 import fr.ariouz.gkit.config.ConfigException;
 import fr.ariouz.gkit.config.ConfigLoader;
 import fr.ariouz.gkit.config.ConfigPrinter;
+import fr.ariouz.gkit.config.ConfigProvider;
 import fr.ariouz.gkit.config.models.GKitConfig;
 import picocli.CommandLine.*;
 
@@ -25,7 +26,7 @@ public class CheckConfigCommand implements Callable<Integer> {
 	@Override
 	public Integer call() {
 		try {
-			GKitConfig config = ConfigLoader.load(profile);
+			GKitConfig config = ConfigProvider.getConfig(profile);
 
 			System.out.println("Config loaded successfully");
 			System.out.println("Active profile: " + profile);

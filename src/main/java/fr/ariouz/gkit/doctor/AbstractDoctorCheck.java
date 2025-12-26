@@ -13,7 +13,7 @@ public abstract class AbstractDoctorCheck implements DoctorCheck {
 		this.status = performCheck();
 
 		if (print) {
-			String message = String.format("%s    %s: %s",
+			String message = String.format("%s		%s: %s",
 					status.getPrefix(),
 					getName(),
 					getStatusMessage(status)

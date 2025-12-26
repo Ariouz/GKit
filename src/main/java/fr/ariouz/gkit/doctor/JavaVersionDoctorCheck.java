@@ -21,9 +21,9 @@ public class JavaVersionDoctorCheck extends AbstractDoctorCheck {
 	@Override
 	protected String getStatusMessage(DoctorStatus status) {
 		return switch (status) {
-			case SUCCESS -> vendor + " " + Runtime.version().feature();
-			case WARNING -> "Not using GraalVM. Add GRAALVM_HOME/bin to PATH";
-			case ERROR-> "Couldn't fetch java vendor version";
+			case SUCCESS 	-> vendor + " " + Runtime.version().feature();
+			case WARNING 	-> "Not using GraalVM. Add GRAALVM_HOME/bin to PATH";
+			case ERROR 		-> "Couldn't fetch java vendor version";
 		};
 	}
 

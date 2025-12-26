@@ -5,6 +5,8 @@ import java.nio.file.Path;
 
 public class NativeImageDoctorCheck extends AbstractDoctorCheck {
 
+	private boolean imageFound;
+
 	@Override
 	protected String getName() {
 		return "native-image";
@@ -15,15 +17,17 @@ public class NativeImageDoctorCheck extends AbstractDoctorCheck {
 		String home = System.getenv("JAVA_HOME");
 
 		if (home == null) return DoctorStatus.ERROR;
-		if (doesNativeImageExists(home)) return DoctorStatus.SUCCESS;
-		return DoctorStatus.WARNING;
+		imageFound = doesNativeImageExists(home);
+		if (imageFound) return DoctorStatus.SUCCESS;
+		return DoctorStatus.ERROR;
 	}
 
 	@Override
 	protected String getStatusMessage(DoctorStatus status) {
+		if (!imageFound && status == DoctorStatus.ERROR) return "Not found in JAVA_HOME/bin";
 		return switch (status) {
 			case SUCCESS -> "Found";
-			case WARNING -> "Not found";
+			case WARNING -> "no-op";
 			case ERROR   -> "JAVA_HOME not set";
 		};
 	}
