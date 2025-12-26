@@ -1,33 +1,30 @@
 package fr.ariouz.gkit.doctor;
 
-public class JavaVersionDoctorCheck implements DoctorCheck {
+public class JavaVersionDoctorCheck extends AbstractDoctorCheck {
 
-	private DoctorStatus status = DoctorStatus.WARNING;
+	private String vendor;
 
 	@Override
-	public DoctorStatus check(boolean print) {
-		String vendor = System.getProperty("java.vendor.version");
+	protected String getName() {
+		return "Java Version";
+	}
 
-		if (vendor == null) status = DoctorStatus.ERROR;
-		else if (vendor.contains("GraalVM")) status = DoctorStatus.SUCCESS;
+	@Override
+	protected DoctorStatus performCheck() {
+		vendor = System.getProperty("java.vendor.version");
 
-		if (print) {
-			StringBuilder builder=  new StringBuilder(status.getPrefix()+ "	Java version: ");
-			switch (status) {
-				case SUCCESS:
-					builder.append(vendor).append(" ").append(Runtime.version().feature());
-					break;
-				case WARNING:
-					builder.append("Not using GraalVM. Add GRAALVM_HOME/bin to PATH");
-					break;
-				case ERROR:
-					builder.append("Couldn't fetch java vendor version");
-					break;
-			}
-			System.out.println(builder);
-		}
+		if (vendor == null) return DoctorStatus.ERROR;
+		else if (vendor.contains("GraalVM")) return DoctorStatus.SUCCESS;
+		return DoctorStatus.WARNING;
+	}
 
-		return status;
+	@Override
+	protected String getStatusMessage(DoctorStatus status) {
+		return switch (status) {
+			case SUCCESS -> vendor + " " + Runtime.version().feature();
+			case WARNING -> "Not using GraalVM. Add GRAALVM_HOME/bin to PATH";
+			case ERROR-> "Couldn't fetch java vendor version";
+		};
 	}
 
 }

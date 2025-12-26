@@ -5,34 +5,29 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class JavaHomeDoctorCheck implements DoctorCheck {
-
-	private DoctorStatus status = DoctorStatus.WARNING;
+public class JavaHomeDoctorCheck extends  AbstractDoctorCheck{
 
 	@Override
-	public DoctorStatus check(boolean print) {
+	protected String getName() {
+		return "JAVA_HOME";
+	}
+
+	@Override
+	protected DoctorStatus performCheck() {
 		String home = System.getenv("JAVA_HOME");
 
-		if (home == null) status = DoctorStatus.ERROR;
-		if (isJavaHomeGraalVM(home)) status = DoctorStatus.SUCCESS;
+		if (home == null) return DoctorStatus.ERROR;
+		if (isJavaHomeGraalVM(home)) return DoctorStatus.SUCCESS;
+		return  DoctorStatus.WARNING;
+	}
 
-		if (print) {
-			StringBuilder builder=  new StringBuilder(status.getPrefix()+ "	Java home: ");
-			switch (status) {
-				case SUCCESS:
-					builder.append("Is a GraalVM installation");
-					break;
-				case WARNING:
-					builder.append("Is not a GraalVM installation");
-					break;
-				case ERROR:
-					builder.append("Not set");
-					break;
-			}
-			System.out.println(builder);
-		}
-
-		return status;
+	@Override
+	protected String getStatusMessage(DoctorStatus status) {
+		return switch (status) {
+			case SUCCESS -> "Is a GraalVM installation";
+			case WARNING -> "Is not a GraalVM installation";
+			case ERROR -> "Not set";
+		};
 	}
 
 	private boolean isJavaHomeGraalVM(String javaHome) {

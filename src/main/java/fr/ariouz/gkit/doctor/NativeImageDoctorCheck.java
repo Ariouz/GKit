@@ -1,38 +1,31 @@
 package fr.ariouz.gkit.doctor;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
-public class NativeImageDoctorCheck implements DoctorCheck {
-
-	private DoctorStatus status = DoctorStatus.WARNING;
+public class NativeImageDoctorCheck extends AbstractDoctorCheck {
 
 	@Override
-	public DoctorStatus check(boolean print) {
+	protected String getName() {
+		return "native-image";
+	}
+
+	@Override
+	protected DoctorStatus performCheck() {
 		String home = System.getenv("JAVA_HOME");
 
-		if (home == null) status = DoctorStatus.ERROR;
-		if (doesNativeImageExists(home)) status = DoctorStatus.SUCCESS;
+		if (home == null) return DoctorStatus.ERROR;
+		if (doesNativeImageExists(home)) return DoctorStatus.SUCCESS;
+		return DoctorStatus.WARNING;
+	}
 
-		if (print) {
-			StringBuilder builder=  new StringBuilder(status.getPrefix()+ "	native-image: ");
-			switch (status) {
-				case SUCCESS:
-					builder.append("Found");
-					break;
-				case WARNING:
-					builder.append("Not found");
-					break;
-				case ERROR:
-					builder.append("JAVA_HOME not set");
-					break;
-			}
-			System.out.println(builder);
-		}
-
-		return status;
+	@Override
+	protected String getStatusMessage(DoctorStatus status) {
+		return switch (status) {
+			case SUCCESS -> "Found";
+			case WARNING -> "Not found";
+			case ERROR   -> "JAVA_HOME not set";
+		};
 	}
 
 	private boolean doesNativeImageExists(String javaHome) {
