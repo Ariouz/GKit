@@ -1,8 +1,8 @@
 package fr.ariouz.gkit.cli;
 
 
+import fr.ariouz.gkit.cli.options.ProfileOption;
 import fr.ariouz.gkit.config.ConfigException;
-import fr.ariouz.gkit.config.ConfigLoader;
 import fr.ariouz.gkit.config.ConfigPrinter;
 import fr.ariouz.gkit.config.ConfigProvider;
 import fr.ariouz.gkit.config.models.GKitConfig;
@@ -16,20 +16,17 @@ import java.util.concurrent.Callable;
 )
 public class CheckConfigCommand implements Callable<Integer> {
 
-	@Option(
-			names= {"-p", "--profile"},
-			description = "Profile to use"
-	)
-	private String profile;
+	@Mixin
+	private ProfileOption profileOption;
 
 
 	@Override
 	public Integer call() {
 		try {
-			GKitConfig config = ConfigProvider.getConfig(profile);
+			GKitConfig config = ConfigProvider.getConfig(profileOption.profile);
 
 			System.out.println("Config loaded successfully");
-			System.out.println("Active profile: " + profile);
+			System.out.println("Active profile: " + profileOption.profile);
 			System.out.println("Effective configuration: \n");
 
 			ConfigPrinter.print(config);
