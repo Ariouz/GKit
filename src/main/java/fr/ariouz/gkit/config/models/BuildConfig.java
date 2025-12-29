@@ -1,7 +1,9 @@
 package fr.ariouz.gkit.config.models;
 
+@ConfigObject
 public class BuildConfig {
 
+	@ConfigDefault(".")
 	private String projectDir;
 	private BuildArtifact artifact;
 

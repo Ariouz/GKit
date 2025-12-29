@@ -3,6 +3,7 @@ package fr.ariouz.gkit.config.models;
 import java.util.ArrayList;
 import java.util.List;
 
+@ConfigObject
 public class NativeConfig {
 
 	private String output;

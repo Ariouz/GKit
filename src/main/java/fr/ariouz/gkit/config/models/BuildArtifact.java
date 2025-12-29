@@ -1,5 +1,6 @@
 package fr.ariouz.gkit.config.models;
 
+@ConfigObject
 public class BuildArtifact {
 
 	private String command;

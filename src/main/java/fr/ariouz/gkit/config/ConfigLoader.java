@@ -29,6 +29,8 @@ public class ConfigLoader {
 			GKitConfig base = yaml.load(input);
 
 			if (base == null) throw new ConfigException("gkit.yml seems to be empty");
+			ConfigDefaultApplier.apply(base);
+
 			if (profile == null || base.getProfiles() == null) {
 				return base;
 			}
@@ -39,7 +41,6 @@ public class ConfigLoader {
 			}
 
 			return ConfigMerger.merge(base, profileConfig);
-
 		} catch (MarkedYAMLException e) {
 			throw YamlErrorFormatter.formatYamlError(e);
 		} catch (Exception e) {

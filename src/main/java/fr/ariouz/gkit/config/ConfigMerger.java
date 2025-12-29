@@ -3,8 +3,6 @@ package fr.ariouz.gkit.config;
 import fr.ariouz.gkit.util.FieldUtil;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 
 public class ConfigMerger {
 

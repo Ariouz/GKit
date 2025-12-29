@@ -2,6 +2,7 @@ package fr.ariouz.gkit.config.models;
 
 import java.util.HashMap;
 
+@ConfigObject
 public class GKitConfig {
 
 	private ProjectConfig project = new ProjectConfig();

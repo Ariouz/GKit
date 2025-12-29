@@ -1,5 +1,6 @@
 package fr.ariouz.gkit.config.models;
 
+@ConfigObject
 public class ProjectConfig {
 
 	private String name;
