@@ -1,16 +1,16 @@
 project:
-  name: native-output
+  name: native-project
   mainClass: fr.ariouz.gkit.Main
   version: "0.0.1"
 
 build:
   # optional: project root dir, by default .
-  projectDir: .
+  projectDir: tests/test-project
   artifact:
     # optional: build command, if absent, no pre-build command will be run, however a jar file MUST exist
     command: "mvn clean package"
     # required: jar file path
-    path: "target/gkit-0.0.1.jar"
+    path: "target/gkit-test-1.0.0.jar"
 
 nativeImage:
   output: "target/native-file"
