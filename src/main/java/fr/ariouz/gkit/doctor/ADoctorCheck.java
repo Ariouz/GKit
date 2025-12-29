@@ -1,6 +1,6 @@
 package fr.ariouz.gkit.doctor;
 
-public abstract class AbstractDoctorCheck implements DoctorCheck {
+public abstract class ADoctorCheck {
 
 	protected DoctorStatus status = DoctorStatus.WARNING;
 
@@ -8,7 +8,6 @@ public abstract class AbstractDoctorCheck implements DoctorCheck {
 	protected abstract DoctorStatus performCheck();
 	protected abstract String getStatusMessage(DoctorStatus status);
 
-	@Override
 	public DoctorStatus check(boolean print) {
 		this.status = performCheck();
 

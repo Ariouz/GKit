@@ -10,9 +10,9 @@ public enum DoctorChecks {
 	;
 
 	private final boolean fatalOnError;
-	private final  Class<? extends DoctorCheck> clazz;
+	private final  Class<? extends ADoctorCheck> clazz;
 
-	DoctorChecks(boolean fatalOnError, Class<? extends DoctorCheck> clazz) {
+	DoctorChecks(boolean fatalOnError, Class<? extends ADoctorCheck> clazz) {
 		this.fatalOnError = fatalOnError;
 		this.clazz = clazz;
 	}
@@ -21,7 +21,7 @@ public enum DoctorChecks {
 		return fatalOnError;
 	}
 
-	public Class<? extends DoctorCheck> getClazz() {
+	public Class<? extends ADoctorCheck> getClazz() {
 		return clazz;
 	}
 }

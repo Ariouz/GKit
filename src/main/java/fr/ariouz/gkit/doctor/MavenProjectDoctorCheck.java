@@ -5,7 +5,7 @@ import fr.ariouz.gkit.config.ConfigProvider;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class MavenProjectDoctorCheck extends AbstractDoctorCheck {
+public class MavenProjectDoctorCheck extends ADoctorCheck {
 
 	boolean isMavenProject = false;
 

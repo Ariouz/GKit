@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class JavaHomeDoctorCheck extends  AbstractDoctorCheck{
+public class JavaHomeDoctorCheck extends ADoctorCheck {
 
 	@Override
 	protected String getName() {

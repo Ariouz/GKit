@@ -3,7 +3,7 @@ package fr.ariouz.gkit.doctor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class NativeImageDoctorCheck extends AbstractDoctorCheck {
+public class NativeImageDoctorCheck extends ADoctorCheck {
 
 	private boolean imageFound;
 

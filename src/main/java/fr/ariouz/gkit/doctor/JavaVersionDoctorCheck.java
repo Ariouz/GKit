@@ -1,6 +1,6 @@
 package fr.ariouz.gkit.doctor;
 
-public class JavaVersionDoctorCheck extends AbstractDoctorCheck {
+public class JavaVersionDoctorCheck extends ADoctorCheck {
 
 	private String vendor;
 

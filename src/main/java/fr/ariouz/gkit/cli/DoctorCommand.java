@@ -23,7 +23,7 @@ public class DoctorCommand implements Callable<Integer> {
 		List<DoctorStatus> results = Arrays.stream(DoctorChecks.values())
 				.map(checkEntry -> {
 				try {
-					DoctorCheck check = checkEntry.getClazz().getDeclaredConstructor().newInstance();
+					ADoctorCheck check = checkEntry.getClazz().getDeclaredConstructor().newInstance();
 					return check.check(true);
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to instantiate check", e);
