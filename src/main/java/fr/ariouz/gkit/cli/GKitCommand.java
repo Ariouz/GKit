@@ -10,6 +10,7 @@ import picocli.CommandLine.Command;
 		subcommands = {
 				CheckConfigCommand.class,
 				DoctorCommand.class,
+				BuildCommand.class,
 		}
 )
 public class GKitCommand implements Runnable {
