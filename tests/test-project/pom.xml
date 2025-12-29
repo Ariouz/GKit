@@ -70,4 +70,13 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <build>
+                <finalName>${artifactId}-${version}-dev</finalName>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

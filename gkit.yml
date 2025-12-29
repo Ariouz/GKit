@@ -25,9 +25,10 @@ nativeImage:
 profiles:
   dev:
     project:
-      version: "0.0.1-dev"
+      version: "1.0.0-dev"
     build:
       artifact:
-        path: "target/gkit-0.0.1.jar"
+        command: mvn clean package -Pdev
+        path: "target/gkit-test-1.0.0-dev.jar"
     nativeImage:
       output: "target/native-file-dev"

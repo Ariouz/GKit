@@ -2,7 +2,7 @@ package fr.ariouz.gkit.config.models;
 
 public class BuildConfig {
 
-	private String projectDir = ".";
+	private String projectDir;
 	private BuildArtifact artifact;
 
 	public String getProjectDir() {
