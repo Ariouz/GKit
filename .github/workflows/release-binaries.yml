@@ -38,7 +38,7 @@ jobs:
         run: |
           OS="${{ runner.os }}"
           ARCH="${{ runner.arch }}"
-          ARCH="${ARCH,,}"
+          ARCH=$(echo "$ARCH" | tr '[:upper:]' '[:lower:]')
     
           if [[ "$OS" == "macOS" ]]; then OS="macos"; fi
           if [[ "$OS" == "Windows" ]]; then FILE=gkit.exe; else FILE=gkit; fi
