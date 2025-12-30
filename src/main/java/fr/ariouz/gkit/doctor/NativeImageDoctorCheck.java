@@ -1,5 +1,7 @@
 package fr.ariouz.gkit.doctor;
 
+import fr.ariouz.gkit.util.NativeUtil;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -17,7 +19,7 @@ public class NativeImageDoctorCheck extends ADoctorCheck {
 		String home = System.getenv("JAVA_HOME");
 
 		if (home == null) return DoctorStatus.ERROR;
-		imageFound = doesNativeImageExists(home);
+		imageFound = NativeUtil.doesNativeImageExists();
 		if (imageFound) return DoctorStatus.SUCCESS;
 		return DoctorStatus.ERROR;
 	}
@@ -30,17 +32,6 @@ public class NativeImageDoctorCheck extends ADoctorCheck {
 			case WARNING -> "no-op";
 			case ERROR   -> "JAVA_HOME not set";
 		};
-	}
-
-	private boolean doesNativeImageExists(String javaHome) {
-		if (javaHome == null) return false;
-
-		String os = System.getProperty("os.name").toLowerCase();
-		String executableName = os.contains("win") ? "native-image.cmd" : "native-image";
-
-		Path niPath = Path.of(javaHome, "bin", executableName);
-
-		return Files.exists(niPath) && Files.isExecutable(niPath);
 	}
 
 }

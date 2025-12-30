@@ -11,6 +11,7 @@ import picocli.CommandLine.Command;
 				CheckConfigCommand.class,
 				DoctorCommand.class,
 				BuildCommand.class,
+				BuildNativeCommand.class,
 		}
 )
 public class GKitCommand implements Runnable {
