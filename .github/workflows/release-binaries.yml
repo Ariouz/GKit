@@ -1,0 +1,54 @@
+name: Build release binaries
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          distribution: graalvm
+          java-version: '25'
+          components: native-image
+          cache: maven
+
+      - name: Build JAR
+        run: mvn clean package
+
+      - name: Build native image
+        run: |
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            native-image -jar target/gkit-*.jar -o gkit.exe
+          else
+            native-image -jar target/gkit-*.jar -o gkit
+          fi
+        shell: bash
+
+      - name: Create archive
+        run: |
+          OS="${{ runner.os }}"
+          ARCH="${{ runner.arch }}"
+          ARCH="${ARCH,,}"
+    
+          if [[ "$OS" == "macOS" ]]; then OS="macos"; fi
+          if [[ "$OS" == "Windows" ]]; then FILE=gkit.exe; else FILE=gkit; fi
+      
+          ARCHIVE_NAME="gkit-${OS}-${ARCH}.tar.gz"
+          tar -czf "$ARCHIVE_NAME" "$FILE"
+        shell: bash
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            gkit-*.tar.gz
