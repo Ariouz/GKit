@@ -1,27 +1,29 @@
 package fr.ariouz.gkit.doctor;
 
+import java.util.function.Supplier;
+
 public enum DoctorChecks {
 
-	JAVA_VERSION(true, JavaVersionDoctorCheck.class),
-	JAVA_HOME(false, JavaHomeDoctorCheck.class),
-	NATIVE_IMAGE(true, NativeImageDoctorCheck.class),
-	MAVEN_PROJECT(false, MavenProjectDoctorCheck.class),
+	JAVA_VERSION(true, JavaVersionDoctorCheck::new),
+	JAVA_HOME(false, JavaHomeDoctorCheck::new),
+	NATIVE_IMAGE(true, NativeImageDoctorCheck::new),
+	MAVEN_PROJECT(false, MavenProjectDoctorCheck::new),
 
 	;
 
 	private final boolean fatalOnError;
-	private final  Class<? extends ADoctorCheck> clazz;
+	private final Supplier<ADoctorCheck> supplier;
 
-	DoctorChecks(boolean fatalOnError, Class<? extends ADoctorCheck> clazz) {
+	DoctorChecks(boolean fatalOnError, Supplier<ADoctorCheck> supplier) {
 		this.fatalOnError = fatalOnError;
-		this.clazz = clazz;
+		this.supplier = supplier;
 	}
 
 	public boolean isFatalOnError() {
 		return fatalOnError;
 	}
 
-	public Class<? extends ADoctorCheck> getClazz() {
-		return clazz;
+	public ADoctorCheck create() {
+		return supplier.get();
 	}
 }

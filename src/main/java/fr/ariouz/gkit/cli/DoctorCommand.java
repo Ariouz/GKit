@@ -23,7 +23,7 @@ public class DoctorCommand implements Callable<Integer> {
 		List<DoctorStatus> results = Arrays.stream(DoctorChecks.values())
 				.map(checkEntry -> {
 				try {
-					ADoctorCheck check = checkEntry.getClazz().getDeclaredConstructor().newInstance();
+					ADoctorCheck check = checkEntry.create();
 					return check.check(true);
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to instantiate check", e);
@@ -40,16 +40,16 @@ public class DoctorCommand implements Callable<Integer> {
 
 		System.out.println();
 		if (errors > 0) {
-			System.out.println(Colors.RED + "Conclusion: BUILD ENVIRONMENT INCOMPLETE");
-			System.out.println(Colors.RED + "Status: " + errors + " Error(s), " + warnings + " Warning(s)");
-			System.out.println("Please fix the errors above before proceeding.");
+			System.out.println(Colors.RED + "Conclusion: BUILD ENVIRONMENT INCOMPLETE" + Colors.RESET);
+			System.out.println(Colors.RED + "Status: " + errors + " Error(s), " + warnings + " Warning(s)" + Colors.RESET);
+			System.out.println("Please fix the errors above before proceeding." + Colors.RESET);
 		} else if (warnings > 0) {
-			System.out.println(Colors.YELLOW + "Conclusion: ENVIRONMENT READY (with warnings)");
-			System.out.println(Colors.YELLOW + "Status: " + success + "/" + results.size() + " checks passed.");
-			System.out.println("Note: The build can proceed, but check warnings for potential runtime issues.");
+			System.out.println(Colors.YELLOW + "Conclusion: ENVIRONMENT READY (with warnings)" + Colors.RESET);
+			System.out.println(Colors.YELLOW + "Status: " + success + "/" + results.size() + " checks passed." + Colors.RESET);
+			System.out.println("Note: The build can proceed, but check warnings for potential runtime issues." + Colors.RESET);
 		} else {
-			System.out.println(Colors.GREEN + "Conclusion: ENVIRONMENT FULLY COMPLIANT");
-			System.out.println(Colors.GREEN + "Status: All " + results.size() + " checks passed successfully.");
+			System.out.println(Colors.GREEN + "Conclusion: ENVIRONMENT FULLY COMPLIANT" + Colors.RESET);
+			System.out.println(Colors.GREEN + "Status: All " + results.size() + " checks passed successfully." + Colors.RESET);
 		}
 
 		return 0;

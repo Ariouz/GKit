@@ -1,0 +1,420 @@
+{
+  "reflection": [
+    {
+      "type": "fr.ariouz.gkit.Main",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "main",
+          "parameterTypes": [
+            "java.lang.String[]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.cli.BuildCommand",
+      "fields": [
+        {
+          "name": "buildNative"
+        },
+        {
+          "name": "dryRun"
+        },
+        {
+          "name": "profileOption"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.cli.BuildNativeCommand",
+      "fields": [
+        {
+          "name": "profileOption"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.cli.CheckConfigCommand",
+      "fields": [
+        {
+          "name": "profileOption"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.cli.DoctorCommand"
+    },
+    {
+      "type": "fr.ariouz.gkit.cli.GKitCommand"
+    },
+    {
+      "type": "fr.ariouz.gkit.cli.options.ProfileOption",
+      "fields": [
+        {
+          "name": "profile"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.BuildArtifact",
+      "fields": [
+        {
+          "name": "command"
+        },
+        {
+          "name": "path"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "setCommand",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setPath",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.BuildArtifactBeanInfo"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.BuildArtifactCustomizer"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.BuildConfig",
+      "fields": [
+        {
+          "name": "artifact"
+        },
+        {
+          "name": "projectDir"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "setArtifact",
+          "parameterTypes": [
+            "fr.ariouz.gkit.config.models.BuildArtifact"
+          ]
+        },
+        {
+          "name": "setProjectDir",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.BuildConfigBeanInfo"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.BuildConfigCustomizer"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.GKitConfig",
+      "fields": [
+        {
+          "name": "build"
+        },
+        {
+          "name": "nativeImage"
+        },
+        {
+          "name": "profiles"
+        },
+        {
+          "name": "project"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "setBuild",
+          "parameterTypes": [
+            "fr.ariouz.gkit.config.models.BuildConfig"
+          ]
+        },
+        {
+          "name": "setNativeImage",
+          "parameterTypes": [
+            "fr.ariouz.gkit.config.models.NativeConfig"
+          ]
+        },
+        {
+          "name": "setProfiles",
+          "parameterTypes": [
+            "java.util.HashMap"
+          ]
+        },
+        {
+          "name": "setProject",
+          "parameterTypes": [
+            "fr.ariouz.gkit.config.models.ProjectConfig"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.GKitConfigBeanInfo"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.GKitConfigCustomizer"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.NativeConfig",
+      "fields": [
+        {
+          "name": "buildArgs"
+        },
+        {
+          "name": "output"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "setBuildArgs",
+          "parameterTypes": [
+            "java.util.List"
+          ]
+        },
+        {
+          "name": "setOutput",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.NativeConfigBeanInfo"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.NativeConfigCustomizer"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.ProjectConfig",
+      "fields": [
+        {
+          "name": "mainClass"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "version"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "setMainClass",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setName",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setVersion",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.ProjectConfigBeanInfo"
+    },
+    {
+      "type": "fr.ariouz.gkit.config.models.ProjectConfigCustomizer"
+    },
+    {
+      "type": "groovy.lang.Closure"
+    },
+    {
+      "type": "java.beans.PropertyVetoException"
+    },
+    {
+      "type": "java.lang.Boolean",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "getBoolean",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Object"
+    },
+    {
+      "type": "java.lang.ObjectBeanInfo"
+    },
+    {
+      "type": "java.lang.ObjectCustomizer"
+    },
+    {
+      "type": "java.lang.String[]"
+    },
+    {
+      "type": "java.nio.file.Path"
+    },
+    {
+      "type": "java.nio.file.Paths"
+    },
+    {
+      "type": "java.sql.Connection"
+    },
+    {
+      "type": "java.sql.Date"
+    },
+    {
+      "type": "java.sql.Driver"
+    },
+    {
+      "type": "java.sql.DriverManager"
+    },
+    {
+      "type": "java.sql.Time"
+    },
+    {
+      "type": "java.sql.Timestamp"
+    },
+    {
+      "type": "java.time.Duration"
+    },
+    {
+      "type": "java.time.Instant"
+    },
+    {
+      "type": "java.time.LocalDate"
+    },
+    {
+      "type": "java.time.LocalDateTime"
+    },
+    {
+      "type": "java.time.LocalTime"
+    },
+    {
+      "type": "java.time.MonthDay"
+    },
+    {
+      "type": "java.time.OffsetDateTime"
+    },
+    {
+      "type": "java.time.OffsetTime"
+    },
+    {
+      "type": "java.time.Period"
+    },
+    {
+      "type": "java.time.Year"
+    },
+    {
+      "type": "java.time.YearMonth"
+    },
+    {
+      "type": "java.time.ZoneId"
+    },
+    {
+      "type": "java.time.ZoneOffset"
+    },
+    {
+      "type": "java.time.ZonedDateTime"
+    },
+    {
+      "type": "java.util.HashMap",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "picocli.CommandLine$AutoHelpMixin",
+      "fields": [
+        {
+          "name": "helpRequested"
+        },
+        {
+          "name": "versionRequested"
+        }
+      ]
+    },
+    {
+      "type": "sun.launcher.LauncherHelper",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "isStaticMain"
+        },
+        {
+          "name": "noArgMain"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getApplicationClass",
+          "parameterTypes": []
+        }
+      ]
+    }
+  ]
+}
