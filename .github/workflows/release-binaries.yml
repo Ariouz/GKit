@@ -27,7 +27,11 @@ jobs:
 
       - name: Build native image
         run: |
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            native-image.cmd -jar target/gkit-*.jar -o gkit
+          else
             native-image -jar target/gkit-*.jar -o gkit
+          fi
         shell: bash
 
       - name: Create archive
