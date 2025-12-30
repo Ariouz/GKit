@@ -27,21 +27,15 @@ jobs:
 
       - name: Build native image
         run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            native-image.cmd -jar target/gkit-*.jar -o gkit.exe
-          else
             native-image -jar target/gkit-*.jar -o gkit
-          fi
         shell: bash
 
       - name: Create archive
         run: |
-          OS="${{ runner.os }}"
-          ARCH="${{ runner.arch }}"
-          ARCH=$(echo "$ARCH" | tr '[:upper:]' '[:lower:]')
+          OS=$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')
+          ARCH=$(echo "${{ runner.arch }}" | tr '[:upper:]' '[:lower:]')
     
-          if [[ "$OS" == "macOS" ]]; then OS="macos"; fi
-          if [[ "$OS" == "Windows" ]]; then FILE=gkit.exe; else FILE=gkit; fi
+          if [[ "$OS" == "windows" ]]; then FILE=gkit.exe; else FILE=gkit; fi
       
           ARCHIVE_NAME="gkit-${OS}-${ARCH}.tar.gz"
           tar -czf "$ARCHIVE_NAME" "$FILE"
