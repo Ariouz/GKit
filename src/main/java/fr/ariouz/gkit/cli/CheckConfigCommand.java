@@ -6,6 +6,7 @@ import fr.ariouz.gkit.config.ConfigException;
 import fr.ariouz.gkit.config.ConfigPrinter;
 import fr.ariouz.gkit.config.ConfigProvider;
 import fr.ariouz.gkit.config.models.GKitConfig;
+import fr.ariouz.gkit.util.Colors;
 import picocli.CommandLine.*;
 
 import java.util.concurrent.Callable;
@@ -31,7 +32,7 @@ public class CheckConfigCommand implements Callable<Integer> {
 
 			ConfigPrinter.print(config);
 		} catch (ConfigException e) {
-			System.err.println(e.getMessage());
+			System.err.println(Colors.RED + e.getMessage() + Colors.RESET);
 			return 1;
 		} catch (Exception e) {
 			System.err.println("An unexpected error occured:");

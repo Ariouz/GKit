@@ -10,7 +10,6 @@ Instead of relying on verbose Maven or Gradle plugins,
 GKit orchestrates your existing build tools and GraalVM
 with an explicit and predictable workflow.
 
----
 
 ## Why GKit?
 
@@ -25,7 +24,6 @@ GKit focuses on:
 GKit does **not** replace Maven or Gradle.
 It orchestrates them.
 
----
 
 ## Features
 
@@ -35,8 +33,8 @@ It orchestrates them.
 - Dry-run mode (`--dry-run`)
 - Configuration validation (`gkit check-config`)
 - Build requirements checks (`gkit doctor`)
+- Variables substitution (`${namespace.key}`)
 
----
 
 ## Installation
 
@@ -47,7 +45,6 @@ Check your installation:
 ```bash
 gkit version
 ```
----
 # Quick start
 
 ### Create a gkit.yml
@@ -91,7 +88,6 @@ Build both at once
 gkit build --native [-p PROFILE]
 ```
 
----
 ## Commands
 | Command                                          |                   Description                    |
 |:-------------------------------------------------|:------------------------------------------------:|
@@ -102,7 +98,6 @@ gkit build --native [-p PROFILE]
 | gkit build   [-p PROFILE] [--dry-run] [--native] |           	Build the project artifact            |
 | gkit native	[-p PROFILE] [--dry-run]             |             Build the native binary              |
 
----
 # Configuration (gkit.yml)
 
 GKit is configured using a single gkit.yml file.
@@ -128,6 +123,20 @@ profiles:
       artifact:
         command: mvn clean package -Pdev
 ```
+
+### Variable substitution
+
+GKit supports variable substitution inside configuration values using the
+`${namespace.key}` syntax.
+
+Variables are expanded after profiles and defaults are applied, and before
+any command is executed. Only **string and list fields** support substitution.
+
+Currently supported namespaces:
+- `env` – environment variables (e.g. `${env.JAVA_HOME}`)
+
+If a variable cannot be resolved, GKit fails with an explicit error.
+
 
 ---
 

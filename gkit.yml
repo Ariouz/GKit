@@ -13,7 +13,7 @@ build:
     path: "target/gkit-test-1.0.0.jar"
 
 nativeImage:
-  output: "target/native-file"
+  output: "target/${env.NATIVE_FILE}"
   # optional: additional build args; empty by default
   buildArgs:
     - "--no-fallback"
@@ -31,4 +31,4 @@ profiles:
         command: mvn clean package -Pdev
         path: "target/gkit-test-1.0.0-dev.jar"
     nativeImage:
-      output: "target/native-file-dev"
+      output: "target/${env.NATIVE_FILE}-dev"
