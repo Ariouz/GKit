@@ -18,41 +18,57 @@ public class ConfigPrinter {
 			return;
 		}
 
-		Class<?> clazz = obj.getClass();
+		if (FieldUtil.isSimple(obj.getClass())) {
+			println(obj.toString(), indent);
+			return;
+		}
 
-		for (Field field : clazz.getDeclaredFields()) {
+		if (obj instanceof Collection<?> col) {
+			for (Object v : col) {
+				print("- ", indent);
+				print(v, indent);
+			}
+			return;
+		}
+
+		if (obj instanceof Map<?, ?> map) {
+			for (var e : map.entrySet()) {
+				print(e.getKey() + ":", indent);
+				print(e.getValue(), indent);
+			}
+			return;
+		}
+
+		Package pkg = obj.getClass().getPackage();
+		if (pkg != null && pkg.getName().startsWith("java.")) {
+			println(obj.toString(), indent);
+			return;
+		}
+
+		for (Field field : obj.getClass().getDeclaredFields()) {
+			if (field.getName().equals("profiles")) continue;
+
 			field.setAccessible(true);
 			try {
 				Object value = field.get(obj);
-
 				if (value == null) continue;
-				if (field.getName().equals("profiles")) continue;
 
-				if (FieldUtil.isSimple(value.getClass())) {
-					println(field.getName() + ": " + value, indent);
-				} else if (value instanceof Collection<?> col) {
-					println(field.getName() + ":", indent);
-					for (Object v : col) {
-						println("- " + v, indent + 1);
-					}
-				} else if (value instanceof Map<?, ?> map) {
-					println(field.getName() + ":", indent);
-					for (var e : map.entrySet()) {
-						println(e.getKey() + ":", indent + 1);
-						print(e.getValue(), indent + 2);
-					}
-				} else {
-					println(field.getName() + ":", indent);
-					print(value, indent + 1);
-				}
+				println(field.getName() + ":", indent);
+				print(value, indent + 1);
+
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException(e);
 			}
 		}
 	}
 
+
 	private static void println(String s, int indent) {
 		System.out.println("  ".repeat(indent) + s);
+	}
+
+	private static void print(String s, int indent) {
+		System.out.print("  ".repeat(indent) + s);
 	}
 
 }

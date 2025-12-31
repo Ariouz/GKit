@@ -134,9 +134,26 @@ any command is executed. Only **string and list fields** support substitution.
 
 Currently supported namespaces:
 - `env` – environment variables (e.g. `${env.JAVA_HOME}`)
+- `gkit` – variables defined in the variables section of the config (e.g. `${gkit.BUILD_DIR}`)
 
 If a variable cannot be resolved, GKit fails with an explicit error.
 
+
+### The `variables` field
+
+The optional `variables` field allows you to define reusable, project-local
+values directly in the configuration.
+
+These variables can reference each other and are exposed through the
+`gkit` namespace.
+
+```yaml
+project:
+  variables:
+      BUILD_DIR: target
+      OUTPUT_NAME: my-app
+      OUTPUT_PATH: ${gkit.BUILD_DIR}/${gkit.OUTPUT_NAME}
+```
 
 ---
 

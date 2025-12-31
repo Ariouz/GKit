@@ -2,6 +2,9 @@ project:
   name: native-project
   mainClass: fr.ariouz.gkit.Main
   version: "0.0.1"
+  variables:
+    ARTIFACT_FILE: gkit-test
+    NATIVE_FILE: ${gkit.ARTIFACT_FILE}-native
 
 build:
   # optional: project root dir, by default .
@@ -10,10 +13,10 @@ build:
     # optional: build command, if absent, no pre-build command will be run, however a jar file MUST exist
     command: "mvn clean package"
     # required: jar file path
-    path: "target/gkit-test-1.0.0.jar"
+    path: "target/${gkit.ARTIFACT_FILE}-1.0.0.jar"
 
 nativeImage:
-  output: "target/${env.NATIVE_FILE}"
+  output: "target/${gkit.NATIVE_FILE}"
   # optional: additional build args; empty by default
   buildArgs:
     - "--no-fallback"
@@ -29,6 +32,6 @@ profiles:
     build:
       artifact:
         command: mvn clean package -Pdev
-        path: "target/gkit-test-1.0.0-dev.jar"
+        path: "target/${gkit.ARTIFACT_FILE}-1.0.0-dev.jar"
     nativeImage:
-      output: "target/${env.NATIVE_FILE}-dev"
+      output: "target/${gkit.NATIVE_FILE}-dev"
