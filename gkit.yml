@@ -17,9 +17,10 @@ build:
 
 nativeImage:
   output: "target/${gkit.NATIVE_FILE}"
-  # optional: additional build args; empty by default
+  # optional: build args, use additionalBuildArgs as a list to use unregistered args
   buildArgs:
-    - "--no-fallback"
+    - fallbackImage: false
+    - initializeAtBuildTime: [foo, bar]
 
 # profiles override global values
 # gkit build --profile dev
@@ -35,3 +36,5 @@ profiles:
         path: "target/${gkit.ARTIFACT_FILE}-1.0.0-dev.jar"
     nativeImage:
       output: "target/${gkit.NATIVE_FILE}-dev"
+      buildArgs:
+        - initializeAtBuildTime: [foobar]

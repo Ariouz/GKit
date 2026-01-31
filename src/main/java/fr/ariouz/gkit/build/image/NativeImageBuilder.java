@@ -2,6 +2,7 @@ package fr.ariouz.gkit.build.image;
 
 import fr.ariouz.gkit.build.BuildException;
 import fr.ariouz.gkit.build.ProcessRunner;
+import fr.ariouz.gkit.build.image.arg.NativeBuildArgParser;
 import fr.ariouz.gkit.config.models.GKitConfig;
 import fr.ariouz.gkit.util.Colors;
 import fr.ariouz.gkit.util.NativeUtil;
@@ -9,6 +10,7 @@ import fr.ariouz.gkit.util.StatusPrefix;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NativeImageBuilder {
@@ -27,11 +29,13 @@ public class NativeImageBuilder {
 		if (!jarArtifact.exists() && !dryRun)
 			throw new BuildException("jar artifact not found");
 
-		List<String> command = List.of(
+		List<String> command = new ArrayList<>(List.of(
 				nativeImage.getAbsolutePath(),
 				"-jar", jarArtifact.getAbsolutePath(),
 				"-o", config.getNativeImage().getOutput()
-		);
+		));
+
+		command.addAll(new NativeBuildArgParser().parseBuildArgs(config.getNativeImage()));
 
 		new ProcessRunner().run(
 				"Build native image",
