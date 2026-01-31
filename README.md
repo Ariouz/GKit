@@ -155,6 +155,68 @@ project:
       OUTPUT_PATH: ${gkit.BUILD_DIR}/${gkit.OUTPUT_NAME}
 ```
 
+### Native build args
+
+You can define arguments to be passed to GraalVM **native-image** in the `nativeImage.buildArgs` section of your config.
+
+Supported arguments are defined in the code: [NativeBuildArg.java](src/main/java/fr/ariouz/gkit/build/image/arg/NativeBuildArg.java).
+
+If you need to pass an argument **not supported by default**, use `additionalBuildArgs` as a list of strings.
+
+#### Example:
+
+```yaml
+nativeImage:
+  buildArgs:
+    - fallbackImage: false                 # Boolean flag
+    - initializeAtBuildTime: [foo, bar]    # List of classes to initialize at build time
+    - additionalBuildArgs: ["-Ob"]         # Any custom native-image arguments
+```
+
+#### Notes:
+
+- **Boolean flags** (`fallbackImage: false`) will be converted to `--no-fallback` automatically.
+- **List arguments** (`initializeAtBuildTime: [foo, bar]`) will generate repeated flags:
+
+```bash
+  --initialize-at-build-time=foo --initialize-at-build-time=bar
+```
+
+- **Additional args** are passed **as-is** to native-image.
+
+- If a [profile](#Profiles) overrides a flag:
+    - New values for lists are **concatenated** with the base values.
+    - Boolean flags or single-value keys are **replaced**.
+
+#### Example:
+**Base `nativeImage.buildArgs`:**
+
+```yaml
+nativeImage:
+  buildArgs:
+    - fallbackImage: false
+    - initializeAtBuildTime: [foo, bar]
+    - verbose: true
+```
+**Dev profile `nativeImage.buildArgs`:**
+
+```yaml
+nativeImage:
+  buildArgs:
+    - initializeAtBuildTime: [foobar]
+    - verbose: false
+    - static: true
+```
+
+**Generated CLI**
+```bash
+--no-fallback \
+--initialize-at-build-time=foo \
+--initialize-at-build-time=bar \
+--initialize-at-build-time=foobar \
+--verbose=false \
+--static
+```
 ---
 
 ## Contributing
