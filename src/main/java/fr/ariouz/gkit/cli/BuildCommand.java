@@ -3,10 +3,10 @@ package fr.ariouz.gkit.cli;
 import fr.ariouz.gkit.build.BuildException;
 import fr.ariouz.gkit.build.artifact.ArtifactBuilder;
 import fr.ariouz.gkit.build.image.NativeImageBuilder;
+import fr.ariouz.gkit.build.image.arg.BuildArgException;
 import fr.ariouz.gkit.cli.options.ProfileOption;
 import fr.ariouz.gkit.config.ConfigException;
 import fr.ariouz.gkit.config.ConfigProvider;
-import fr.ariouz.gkit.config.models.BuildArtifact;
 import fr.ariouz.gkit.config.models.BuildConfig;
 import fr.ariouz.gkit.config.models.GKitConfig;
 import fr.ariouz.gkit.util.Colors;
@@ -15,7 +15,6 @@ import picocli.CommandLine.*;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
 @Command (
@@ -42,26 +41,15 @@ public class BuildCommand implements Callable<Integer> {
 
 	@Override
 	public Integer call() {
-		try {
+		return ErrorHandler.runWithErrorHandling(() -> {
 			GKitConfig config = ConfigProvider.getConfig(profileOption.profile);
 
 			if (dryRun) System.out.println(Colors.YELLOW + "[Dry-Run Mode Enabled]" + Colors.RESET);
 			buildArtifactStep(config);
 			if (buildNative)  new NativeImageBuilder().buildNativeImage(config, dryRun);
 
-		} catch (ConfigException e) {
-			System.err.println(Colors.RED + "Configuration Error: " + e.getMessage() + Colors.RESET);
-			return 1;
-		} catch (BuildException e) {
-			System.err.println(Colors.RED + "Build Failed: " + e.getMessage() + Colors.RESET);
-			return 1;
-		} catch (Exception e) {
-			System.err.println(Colors.RED + "An unexpected error occurred:" + Colors.RESET);
-			e.printStackTrace();
-			return 2;
-		}
-
-		return 0;
+			return 0;
+		});
 	}
 
 	private void buildArtifactStep(GKitConfig config) {

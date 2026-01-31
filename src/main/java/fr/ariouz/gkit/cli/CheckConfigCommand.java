@@ -23,7 +23,7 @@ public class CheckConfigCommand implements Callable<Integer> {
 
 	@Override
 	public Integer call() {
-		try {
+		return ErrorHandler.runWithErrorHandling(() -> {
 			GKitConfig config = ConfigProvider.getConfig(profileOption.profile);
 
 			System.out.println("Config loaded successfully");
@@ -31,14 +31,8 @@ public class CheckConfigCommand implements Callable<Integer> {
 			System.out.println("Effective configuration: \n");
 
 			ConfigPrinter.print(config);
-		} catch (ConfigException e) {
-			System.err.println(Colors.RED + e.getMessage() + Colors.RESET);
-			return 1;
-		} catch (Exception e) {
-			System.err.println("An unexpected error occured:");
-			e.printStackTrace();
-			return 2;
-		}
-		return 0;
+
+			return 0;
+		});
 	}
 }
