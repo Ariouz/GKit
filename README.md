@@ -196,7 +196,7 @@ nativeImage:
   buildArgs:
     - fallbackImage: false
     - initializeAtBuildTime: [foo, bar]
-    - verbose: true
+    - verbose: false
 ```
 **Dev profile `nativeImage.buildArgs`:**
 
@@ -204,7 +204,7 @@ nativeImage:
 nativeImage:
   buildArgs:
     - initializeAtBuildTime: [foobar]
-    - verbose: false
+    - verbose: true
     - static: true
 ```
 
@@ -214,7 +214,7 @@ nativeImage:
 --initialize-at-build-time=foo \
 --initialize-at-build-time=bar \
 --initialize-at-build-time=foobar \
---verbose=false \
+--verbose \
 --static
 ```
 ---
