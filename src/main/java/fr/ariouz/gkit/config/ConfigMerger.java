@@ -3,6 +3,7 @@ package fr.ariouz.gkit.config;
 import fr.ariouz.gkit.util.FieldUtil;
 
 import java.lang.reflect.Field;
+import java.util.*;
 
 public class ConfigMerger {
 
@@ -12,30 +13,89 @@ public class ConfigMerger {
 		if (profile == null) return base;
 
 		try {
-			Class<?> baseClass = base.getClass();
-			T result =  (T) baseClass.getDeclaredConstructor().newInstance();
+			Class<?> clazz = base.getClass();
+			T result = (T) clazz.getDeclaredConstructor().newInstance();
 
-			for (Field field : baseClass.getDeclaredFields()) {
+			for (Field field : clazz.getDeclaredFields()) {
 				field.setAccessible(true);
-
-				Object b = field.get(base);
-				Object p = field.get(profile);
-				Object value;
-
-				if (p == null) value = b;
-				else if (FieldUtil.isSimple(field.getType())) value = p;
-				else if (FieldUtil.isCollection(field.getType())) value = p;
-				else value = merge(b, p);
-
-				field.set(result, value);
+				Object mergedValue = mergeField(field, field.get(base), field.get(profile));
+				field.set(result, mergedValue);
 			}
 
 			return result;
-		} catch (Exception e){
-			throw new RuntimeException("Failed to merge config profile: " + e);
+		} catch (Exception e) {
+			throw new ConfigException("Failed to merge config profile: " + e);
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	private static Object mergeField(Field field, Object baseValue, Object profileValue) {
+		if (profileValue == null) return baseValue;
+		if (FieldUtil.isSimple(field.getType())) return profileValue;
 
+		if (Map.class.isAssignableFrom(field.getType())) {
+			return mergeMap((Map<Object,Object>) baseValue, (Map<Object,Object>) profileValue);
+		}
 
+		if (Collection.class.isAssignableFrom(field.getType())) {
+			return mergeCollection((Collection<Object>) baseValue, (Collection<Object>) profileValue);
+		}
+
+		return merge(baseValue, profileValue);
+	}
+
+	private static Map<Object,Object> mergeMap(Map<Object,Object> base, Map<Object,Object> profile) {
+		Map<Object,Object> merged = new LinkedHashMap<>();
+		if (base != null) merged.putAll(base);
+		if (profile != null) merged.putAll(profile);
+		return merged;
+	}
+
+	private static Collection<Object> mergeCollection(Collection<Object> base, Collection<Object> profile) {
+		Collection<Object> merged = new ArrayList<>();
+		if (base != null) merged.addAll(base);
+
+		if (profile != null) {
+			for (Object pItem : profile) {
+				if (pItem instanceof Map<?, ?> pMap) {
+					mergeMapItem(merged, pMap);
+				} else {
+					merged.add(pItem);
+				}
+			}
+		}
+
+		return merged;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void mergeMapItem(Collection<Object> merged, Map<?, ?> profileMap) {
+		String pKey = profileMap.keySet().iterator().next().toString();
+		boolean mergedFlag = false;
+
+		for (Object bItem : merged) {
+			if (bItem instanceof Map<?, ?> bMapRaw) {
+				Map<Object,Object> bMap = (Map<Object,Object>) bMapRaw;
+				if (bMap.containsKey(pKey)) {
+					Object bValue = bMap.get(pKey);
+					Object pValue = profileMap.get(pKey);
+
+					if (bValue instanceof List<?> bList && pValue instanceof List<?> pList) {
+						List<Object> newList = new ArrayList<>(bList);
+						newList.addAll(pList);
+						bMap.put(pKey, newList);
+					} else {
+						bMap.put(pKey, pValue);
+					}
+
+					mergedFlag = true;
+					break;
+				}
+			}
+		}
+
+		if (!mergedFlag) {
+			merged.add(profileMap);
+		}
+	}
 }

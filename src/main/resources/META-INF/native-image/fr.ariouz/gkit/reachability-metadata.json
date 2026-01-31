@@ -273,6 +273,12 @@
           "parameterTypes": [
             "java.lang.String"
           ]
+        },
+        {
+          "name": "setVariables",
+          "parameterTypes": [
+            "java.util.Map"
+          ]
         }
       ]
     },

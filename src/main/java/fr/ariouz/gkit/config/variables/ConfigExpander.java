@@ -27,6 +27,8 @@ public class ConfigExpander {
 	public void expandConfig(Object config) {
 		if (config == null) return;
 
+		if (isTerminalType(config)) return ;
+
 		if (config instanceof Collection<?> collection) {
 			expandCollection(collection);
 			return ;
@@ -107,6 +109,13 @@ public class ConfigExpander {
 
 		matcher.appendTail(sb);
 		return sb.toString();
+	}
+
+	private boolean isTerminalType(Object o) {
+		return o instanceof String
+				|| o instanceof Number
+				|| o instanceof Boolean
+				|| o.getClass().isEnum();
 	}
 
 }
