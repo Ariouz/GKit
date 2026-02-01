@@ -8,9 +8,5 @@ public interface NativeBuildArgRenderer<T> {
 
 	List<String> render(NativeBuildArg arg, T value);
 
-
-
-
-
 }
 

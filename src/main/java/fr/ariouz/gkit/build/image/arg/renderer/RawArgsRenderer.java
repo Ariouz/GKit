@@ -4,10 +4,10 @@ import fr.ariouz.gkit.build.image.arg.NativeBuildArg;
 
 import java.util.List;
 
-public class KeyValueListFlagRenderer extends AbstractNativeBuildArgRenderer<List<?>> {
+public class RawArgsRenderer extends AbstractNativeBuildArgRenderer<List<?>> {
 
 	@SuppressWarnings("unchecked")
-	public KeyValueListFlagRenderer() {
+	public RawArgsRenderer() {
 		super((Class<List<?>>)(Class<?>) List.class);
 	}
 
@@ -19,7 +19,6 @@ public class KeyValueListFlagRenderer extends AbstractNativeBuildArgRenderer<Lis
 		return values.stream()
 				.map(v -> ((String) v).trim())
 				.filter(s -> !s.isEmpty())
-				.map(v -> "--" + arg.getCliKey() + "=" + v)
 				.toList();
 	}
 

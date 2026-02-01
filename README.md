@@ -161,16 +161,16 @@ You can define arguments to be passed to GraalVM **native-image** in the `native
 
 Supported arguments are defined in the code: [NativeBuildArg.java](src/main/java/fr/ariouz/gkit/build/image/arg/NativeBuildArg.java).
 
-If you need to pass an argument **not supported by default**, use `additionalBuildArgs` as a list of strings.
+If you need to pass an argument **not supported by default**, use `rawArgs` as a list of strings.
 
 #### Example:
 
 ```yaml
 nativeImage:
   buildArgs:
-    - fallbackImage: false                 # Boolean flag
-    - initializeAtBuildTime: [foo, bar]    # List of classes to initialize at build time
-    - additionalBuildArgs: ["-Ob"]         # Any custom native-image arguments
+    - fallbackImage: false                  # Boolean flag
+    - initializeAtBuildTime: [foo, bar]     # List of classes to initialize at build time
+    - rawArgs: ["-Ob"]                      # Any custom native-image arguments
 ```
 
 #### Notes:
@@ -182,7 +182,7 @@ nativeImage:
   --initialize-at-build-time=foo --initialize-at-build-time=bar
 ```
 
-- **Additional args** are passed **as-is** to native-image.
+- **Raw args** are passed **as-is** to native-image.
 
 - If a [profile](#Profiles) overrides a flag:
     - New values for lists are **concatenated** with the base values.

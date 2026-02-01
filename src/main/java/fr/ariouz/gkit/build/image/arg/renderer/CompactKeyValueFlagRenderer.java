@@ -4,9 +4,9 @@ import fr.ariouz.gkit.build.image.arg.NativeBuildArg;
 
 import java.util.List;
 
-public class KeyValueFlagRenderer extends AbstractNativeBuildArgRenderer<String> {
+public class CompactKeyValueFlagRenderer extends AbstractNativeBuildArgRenderer<String> {
 
-	public KeyValueFlagRenderer() {
+	public CompactKeyValueFlagRenderer() {
 		super(String.class);
 	}
 
@@ -14,7 +14,6 @@ public class KeyValueFlagRenderer extends AbstractNativeBuildArgRenderer<String>
 	public List<String> renderValue(NativeBuildArg arg, String value) {
 		if (value == null) return List.of();
 
-		return List.of("--" + arg.getCliKey() + "=" + value);
+		return List.of("-" + arg.getCliKey() + "=" + value);
 	}
-
 }

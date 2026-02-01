@@ -4,16 +4,16 @@ import fr.ariouz.gkit.build.image.arg.NativeBuildArg;
 
 import java.util.List;
 
-public class BooleanFlagRenderer extends AbstractNativeBuildArgRenderer<Boolean> {
+public class CompactBooleanFlagRenderer extends AbstractNativeBuildArgRenderer<Boolean> {
 
 	private final boolean inverted;
 
-	public BooleanFlagRenderer() {
+	public CompactBooleanFlagRenderer() {
 		super(Boolean.class);
 		this.inverted = false;
 	}
 
-	public BooleanFlagRenderer(boolean inverted) {
+	public CompactBooleanFlagRenderer(boolean inverted) {
 		super(Boolean.class);
 		this.inverted = inverted;
 	}
@@ -23,8 +23,7 @@ public class BooleanFlagRenderer extends AbstractNativeBuildArgRenderer<Boolean>
 		if (value == null) return List.of();
 
 		return inverted != value
-				? List.of("--" + arg.getCliKey())
+				? List.of("-" + arg.getCliKey())
 				: List.of();
 	}
-
 }

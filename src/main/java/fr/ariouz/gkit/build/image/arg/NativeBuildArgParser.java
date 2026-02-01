@@ -41,8 +41,14 @@ public class NativeBuildArgParser {
 	List<String> renderArgs(List<NormalizedArg> args) {
 		List<String> cli = new ArrayList<>();
 
-		for (NormalizedArg arg : args) {
-			cli.addAll(arg.arg().render(arg.value()));
+		for (NormalizedArg normalized : args) {
+			try {
+				cli.addAll(normalized.arg().render(normalized.value()));
+			} catch (IllegalArgumentException e) {
+				throw new BuildArgException(
+						"Invalid value for '" + normalized.arg().getConfigKey() + "': " + e.getMessage()
+				);
+			}
 		}
 
 		return cli;
