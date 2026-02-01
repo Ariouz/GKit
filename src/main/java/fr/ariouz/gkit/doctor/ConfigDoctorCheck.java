@@ -31,7 +31,7 @@ public class ConfigDoctorCheck extends ADoctorCheck {
 		return switch (status) {
 			case ERROR -> "Failed to load config. Consider using gkit check-config [-p PROFILE] for details";
 			case WARNING -> "One or more native build args are invalid. Consider using gkit check-config [-p PROFILE] for details";
-			case SUCCESS -> "No error on base profile found. Consider using gkit check-config -p PROFILE for profile validation";
+			case SUCCESS -> "No error on base profile found. Consider using gkit check-config [-p PROFILE] for profile validation";
 		};
 	}
 }

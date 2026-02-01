@@ -14,15 +14,12 @@ with an explicit and predictable workflow.
 ## Why GKit?
 
 Building native images with GraalVM is powerful but often painful:
-complex plugins, duplicated configuration, CI inconsistencies.
+complex plugins, duplicated configuration, CI inconsistencies, tons of build args.
 
 GKit focuses on:
-- **Developer Experience** – clear commands, no magic
+- **Developer Experience** – clear commands, detailed feedback
 - **Portable configuration** – one `gkit.yml`, reusable everywhere
 - **CI-friendly workflows** – explicit commands, dry-run support
-
-GKit does **not** replace Maven or Gradle.
-It orchestrates them.
 
 
 ## Features
@@ -60,6 +57,8 @@ build:
     
 nativeImage:
       output: target/my-app
+      buildArgs:
+        fallbackImage: false
 
 profiles:
   dev:
@@ -174,13 +173,6 @@ nativeImage:
 ```
 
 #### Notes:
-
-- **Boolean flags** (`fallbackImage: false`) will be converted to `--no-fallback` automatically.
-- **List arguments** (`initializeAtBuildTime: [foo, bar]`) will generate repeated flags:
-
-```bash
-  --initialize-at-build-time=foo --initialize-at-build-time=bar
-```
 
 - **Raw args** are passed **as-is** to native-image.
 
