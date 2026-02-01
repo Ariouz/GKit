@@ -30,7 +30,7 @@ public class ConfigMerger {
 
 	@SuppressWarnings("unchecked")
 	private static Object mergeField(Field field, Object baseValue, Object profileValue) {
-		if (profileValue == null) return baseValue;
+		if (profileValue == null) return copy(baseValue);
 		if (FieldUtil.isSimple(field.getType())) return profileValue;
 
 		if (Map.class.isAssignableFrom(field.getType())) {
@@ -53,15 +53,17 @@ public class ConfigMerger {
 
 	private static Collection<Object> mergeCollection(Collection<Object> base, Collection<Object> profile) {
 		Collection<Object> merged = new ArrayList<>();
-		if (base != null) merged.addAll(base);
+		if (base != null) {
+			for (Object bItem : base) {
+				if (bItem instanceof Map<?, ?> map) merged.add(new LinkedHashMap<>(map));
+				else merged.add(bItem);
+			}
+		}
 
 		if (profile != null) {
 			for (Object pItem : profile) {
-				if (pItem instanceof Map<?, ?> pMap) {
-					mergeMapItem(merged, pMap);
-				} else {
-					merged.add(pItem);
-				}
+				if (pItem instanceof Map<?, ?> pMap) mergeMapItem(merged, pMap);
+				else merged.add(pItem);
 			}
 		}
 
@@ -95,7 +97,18 @@ public class ConfigMerger {
 		}
 
 		if (!mergedFlag) {
-			merged.add(profileMap);
+			merged.add(new LinkedHashMap<>(profileMap));
 		}
 	}
+
+	private static Object copy(Object value) {
+		if (value == null) return null;
+		if (value instanceof List<?> list) return new ArrayList<>(list);
+		if (value instanceof Set<?> set) new HashSet<>(set);
+		if (value instanceof Map<?, ?> map) return new LinkedHashMap<>(map);
+
+		return value;
+	}
+
+
 }
