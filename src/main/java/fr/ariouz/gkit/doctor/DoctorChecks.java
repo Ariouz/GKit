@@ -7,6 +7,7 @@ public enum DoctorChecks {
 	JAVA_VERSION(true, JavaVersionDoctorCheck::new),
 	JAVA_HOME(false, JavaHomeDoctorCheck::new),
 	NATIVE_IMAGE(true, NativeImageDoctorCheck::new),
+	CONFIG(true, ConfigDoctorCheck::new),
 	MAVEN_PROJECT(false, MavenProjectDoctorCheck::new),
 
 	;
