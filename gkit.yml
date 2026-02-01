@@ -20,7 +20,12 @@ nativeImage:
   # optional: build args, use additionalBuildArgs as a list to use unregistered args
   buildArgs:
     - fallbackImage: false
-    - initializeAtBuildTime: [foo, bar]
+    - initializeAtBuildTime:
+    - verboseBuild: true
+    - optimizationLevel: 2
+    - debugInfo: true
+    - rawArgs: []
+
 
 # profiles override global values
 # gkit build --profile dev
@@ -37,4 +42,4 @@ profiles:
     nativeImage:
       output: "target/${gkit.NATIVE_FILE}-dev"
       buildArgs:
-        - initializeAtBuildTime: [foobar]
+        - initializeAtBuildTime: []
