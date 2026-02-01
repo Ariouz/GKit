@@ -12,8 +12,8 @@ public class CompactKeyValueFlagRenderer extends AbstractNativeBuildArgRenderer<
 
 	@Override
 	public List<String> renderValue(NativeBuildArg arg, String value) {
-		if (value == null) return List.of();
+		if (value == null || value.isEmpty()) return List.of();
 
-		return List.of("-" + arg.getCliKey() + "=" + value);
+		return List.of("-" + arg.getCliKey() + value);
 	}
 }
