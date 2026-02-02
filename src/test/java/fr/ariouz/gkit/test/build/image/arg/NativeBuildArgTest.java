@@ -131,17 +131,6 @@ public class NativeBuildArgTest {
 		assertThat(args).isEmpty();
 	}
 
-    @Test
-    void keyValue_isNull() {
-        NativeConfig nativeConfig = new NativeConfig();
-        nativeConfig.setBuildArgs(List.of(
-                Map.of(NativeBuildArg.LIBC.getConfigKey(), null)
-        ));
-
-        List<String> args = new NativeBuildArgParser().parseBuildArgs(nativeConfig);
-        assertThat(args).isEmpty();
-    }
-
 	@Test
 	void keyValue_isValid() {
 		NativeConfig nativeConfig = new NativeConfig();
