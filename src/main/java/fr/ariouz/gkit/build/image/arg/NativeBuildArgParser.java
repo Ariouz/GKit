@@ -1,5 +1,6 @@
 package fr.ariouz.gkit.build.image.arg;
 
+import fr.ariouz.gkit.config.ConfigException;
 import fr.ariouz.gkit.config.models.NativeConfig;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class NativeBuildArgParser {
 	public NativeBuildArgParser() {}
 
 	public List<String> parseBuildArgs(NativeConfig config) {
+        if (config == null) throw new ConfigException("Native config is null");
 		List<NormalizedArg> normalizedArgs = normalize(config.getBuildArgs());
 		normalizedArgs.sort(Comparator.comparing(NormalizedArg::arg));
 		return renderArgs(normalizedArgs);
