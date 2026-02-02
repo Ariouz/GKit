@@ -178,17 +178,30 @@ public class NativeBuildArgTest {
 	}
 
 	@Test
-	void rawArgs_arePassedAsIs() {
+	void rawArgs_arePassedAsIsSingle() {
 		NativeConfig nativeConfig = new NativeConfig();
 		nativeConfig.setBuildArgs(List.of(
-				Map.of(NativeBuildArg.RAW_ARGS.getConfigKey(), List.of("--enable-preview", "-Ob"))
+				Map.of(NativeBuildArg.RAW_ARGS.getConfigKey(), List.of("-Ob"))
 		));
 
 		List<String> args = new NativeBuildArgParser()
 				.parseBuildArgs(nativeConfig);
 
-		assertThat(args).containsExactly("--enable-preview", "-Ob");
+		assertThat(args).containsExactly("-Ob");
 	}
+
+    @Test
+    void rawArgs_arePassedAsIsMultiple() {
+        NativeConfig nativeConfig = new NativeConfig();
+        nativeConfig.setBuildArgs(List.of(
+                Map.of(NativeBuildArg.RAW_ARGS.getConfigKey(), List.of("--enable-preview", "-Ob"))
+        ));
+
+        List<String> args = new NativeBuildArgParser()
+                .parseBuildArgs(nativeConfig);
+
+        assertThat(args).containsExactly("--enable-preview", "-Ob");
+    }
 
 	@Test
 	void rawArgs_emptyArgs() {
