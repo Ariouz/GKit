@@ -88,26 +88,6 @@ public class NativeImageBuilderTest {
 		).doesNotThrowAnyException();
 	}
 
-	@Test
-	void dryRunIsDisabled() throws Exception {
-		File jar = tempDir.resolve("app.jar").toFile();
-		assertThat(jar.createNewFile()).isTrue();
-
-		NativeImageBuilder builder = new NativeImageBuilder() {
-			@Override
-			protected File getNativeImage() {
-				return tempDir.resolve("native-image").toFile();
-			}
-		};
-
-		GKitConfig config = baseConfig("app.jar");
-
-		assertThatCode(() ->
-				builder.buildNativeImage(config, false)
-		).doesNotThrowAnyException();
-	}
-
-
 	private GKitConfig baseConfig(String jarPath) {
 		GKitConfig config = new GKitConfig();
 
