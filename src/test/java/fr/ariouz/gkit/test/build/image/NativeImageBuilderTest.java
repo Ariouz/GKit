@@ -70,7 +70,7 @@ public class NativeImageBuilderTest {
 	}
 
 	@Test
-	void jarExistsAndDryRunIsEnabled() throws Exception {
+	void dryRunIsEnabled() throws Exception {
 		File jar = tempDir.resolve("app.jar").toFile();
 		assertThat(jar.createNewFile()).isTrue();
 
@@ -85,6 +85,25 @@ public class NativeImageBuilderTest {
 
 		assertThatCode(() ->
 				builder.buildNativeImage(config, true)
+		).doesNotThrowAnyException();
+	}
+
+	@Test
+	void dryRunIsDisabled() throws Exception {
+		File jar = tempDir.resolve("app.jar").toFile();
+		assertThat(jar.createNewFile()).isTrue();
+
+		NativeImageBuilder builder = new NativeImageBuilder() {
+			@Override
+			protected File getNativeImage() {
+				return tempDir.resolve("native-image").toFile();
+			}
+		};
+
+		GKitConfig config = baseConfig("app.jar");
+
+		assertThatCode(() ->
+				builder.buildNativeImage(config, false)
 		).doesNotThrowAnyException();
 	}
 

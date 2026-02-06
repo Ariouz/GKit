@@ -23,7 +23,7 @@ public class ArtifactBuilder {
 				? List.of("cmd.exe", "/c", buildArtifact.getCommand())
 				: List.of("sh", "-c", buildArtifact.getCommand());
 
-		new ProcessRunner().run(
+		getProcessRunner().run(
 				"Build artifact",
 				command,
 				new File(config.getProjectDir()),
@@ -42,5 +42,7 @@ public class ArtifactBuilder {
 		return artifact;
 	}
 
-
+	protected ProcessRunner getProcessRunner() {
+		return new ProcessRunner();
+	}
 }
