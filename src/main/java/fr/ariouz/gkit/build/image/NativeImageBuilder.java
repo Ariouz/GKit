@@ -18,7 +18,7 @@ public class NativeImageBuilder {
 	public void buildNativeImage(GKitConfig config, boolean dryRun) {
 		System.out.println(Colors.CYAN + "Generating GraalVM Native Image..." + Colors.RESET);
 
-		File nativeImage = NativeUtil.getNativeImage();
+		File nativeImage = getNativeImage();
 		if (nativeImage == null)
 			throw new BuildException("native-image not found");
 
@@ -52,6 +52,10 @@ public class NativeImageBuilder {
 		} else
 			System.out.println(StatusPrefix.SUCCESS +
 				" Native image generated successfully." + Colors.RESET);
+	}
+
+	protected File getNativeImage() {
+		return NativeUtil.getNativeImage();
 	}
 
 }

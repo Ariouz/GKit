@@ -28,6 +28,18 @@ public class NativeBuildArgTest {
 		}
 	}
 
+	static class TestIntegerRenderer extends AbstractNativeBuildArgRenderer<Integer> {
+
+		protected TestIntegerRenderer() {
+			super(Integer.class);
+		}
+
+		@Override
+		protected List<String> renderValue(NativeBuildArg arg, Integer value) {
+			return List.of(value == null ? "" : String.valueOf(value));
+		}
+	}
+
 
 	@Test
 	void abstractWrongExpectedType_throwsException() {
@@ -39,6 +51,24 @@ public class NativeBuildArgTest {
 	@Test
 	void abstractExpectStringButInteger_isValid() {
 		TestStringRenderer renderer = new TestStringRenderer();
+		assertThat(renderer.render(null, 2)).containsExactly("2");
+	}
+
+	@Test
+	void abstractExpectString_isValid() {
+		TestStringRenderer renderer = new TestStringRenderer();
+		assertThat(renderer.render(null, "2")).containsExactly("2");
+	}
+
+	@Test
+	void abstractExpectStringBuyNull_isEmpty() {
+		TestStringRenderer renderer = new TestStringRenderer();
+		assertThat(renderer.render(null, null)).containsExactly("");
+	}
+
+	@Test
+	void abstractExpectInteger_isValid() {
+		TestIntegerRenderer renderer = new TestIntegerRenderer();
 		assertThat(renderer.render(null, 2)).containsExactly("2");
 	}
 
