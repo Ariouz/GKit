@@ -28,7 +28,7 @@ public class KeyValueListFlagRenderer extends AbstractNativeBuildArgRenderer<Lis
 	private void validateElements(List<?> value) {
 		for (Object v : value) {
 			if (!(v instanceof String s)) {
-				throw new BuildArgException(
+				throw new IllegalArgumentException(
 						"Expected list of strings, got " + v.getClass().getSimpleName()
 				);
 			}

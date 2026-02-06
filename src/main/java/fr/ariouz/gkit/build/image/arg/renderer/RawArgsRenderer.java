@@ -26,8 +26,8 @@ public class RawArgsRenderer extends AbstractNativeBuildArgRenderer<List<?>> {
 	private void validateElements(List<?> value) {
 		for (Object v : value) {
 			if (!(v instanceof String s)) {
-				throw new BuildArgException(
-						"'"+v+"': Expected list of strings, got " + v.getClass().getSimpleName()
+				throw new IllegalArgumentException(
+						"Expected list of strings, got " + v.getClass().getSimpleName()
 				);
 			}
 		}
