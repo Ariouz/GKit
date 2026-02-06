@@ -120,7 +120,4 @@ public enum NativeBuildArg {
 				.orElseThrow(() -> new BuildArgException("Unknown native image build arg: '" + key+"'") );
 	}
 
-	public NativeBuildArgRenderer<?> getRenderer() {
-		return renderer;
-	}
 }

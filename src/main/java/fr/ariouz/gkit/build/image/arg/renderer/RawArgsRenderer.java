@@ -1,5 +1,6 @@
 package fr.ariouz.gkit.build.image.arg.renderer;
 
+import fr.ariouz.gkit.build.image.arg.BuildArgException;
 import fr.ariouz.gkit.build.image.arg.NativeBuildArg;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class RawArgsRenderer extends AbstractNativeBuildArgRenderer<List<?>> {
 	private void validateElements(List<?> value) {
 		for (Object v : value) {
 			if (!(v instanceof String s)) {
-				throw new IllegalArgumentException(
-						"Expected list of strings, got " + v.getClass().getSimpleName()
+				throw new BuildArgException(
+						"'"+v+"': Expected list of strings, got " + v.getClass().getSimpleName()
 				);
 			}
 		}

@@ -21,8 +21,6 @@ public class NativeBuildArgParser {
 		List<NormalizedArg> result = new ArrayList<>();
 
 		for (Map<String, Object> map : buildArgs) {
-			if (map.size() != 1) throw new BuildArgException("BuildArg must contain one entry: " + map);
-
 			Map.Entry<String, Object> entry =
 					map.entrySet()
 					.iterator()
@@ -32,6 +30,8 @@ public class NativeBuildArgParser {
 			Object value = entry.getValue();
 
 			NativeBuildArg arg = NativeBuildArg.fromConfigKey(key);
+			if (result.stream().anyMatch(norm -> norm.arg() == arg))
+				throw new BuildArgException("Build arg '"+key+"' is defined twice.");
 			result.add(new NormalizedArg(arg, value));
 		}
 

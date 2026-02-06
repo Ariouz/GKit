@@ -5,8 +5,4 @@ public class BuildException extends RuntimeException {
 		super(message);
 	}
 
-	public BuildException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
 }

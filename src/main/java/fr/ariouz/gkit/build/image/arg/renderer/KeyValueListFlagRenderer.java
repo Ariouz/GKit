@@ -1,5 +1,7 @@
 package fr.ariouz.gkit.build.image.arg.renderer;
 
+import fr.ariouz.gkit.build.BuildException;
+import fr.ariouz.gkit.build.image.arg.BuildArgException;
 import fr.ariouz.gkit.build.image.arg.NativeBuildArg;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class KeyValueListFlagRenderer extends AbstractNativeBuildArgRenderer<Lis
 	private void validateElements(List<?> value) {
 		for (Object v : value) {
 			if (!(v instanceof String s)) {
-				throw new IllegalArgumentException(
+				throw new BuildArgException(
 						"Expected list of strings, got " + v.getClass().getSimpleName()
 				);
 			}

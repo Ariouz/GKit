@@ -6,9 +6,4 @@ public class BuildArgException extends RuntimeException {
 		super(message);
 	}
 
-	public BuildArgException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-
 }
