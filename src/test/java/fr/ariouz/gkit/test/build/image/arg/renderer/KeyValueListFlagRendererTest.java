@@ -35,7 +35,7 @@ public class KeyValueListFlagRendererTest {
 
 		assertThatThrownBy(() ->
 				renderer.render(NativeBuildArg.INITIALIZE_AT_BUILD_TIME, List.of("foo", 2))
-		).isInstanceOf(BuildArgException.class);
+		).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test

@@ -45,7 +45,7 @@ public class RawArgsRendererTest {
 		RawArgsRenderer renderer = new RawArgsRenderer();
 		assertThatThrownBy(() ->
 				renderer.render(NativeBuildArg.RAW_ARGS, List.of("foo", 4))
-		).isInstanceOf(BuildArgException.class);
+		).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

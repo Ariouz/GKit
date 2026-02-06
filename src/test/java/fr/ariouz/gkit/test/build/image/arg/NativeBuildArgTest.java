@@ -3,6 +3,7 @@ package fr.ariouz.gkit.test.build.image.arg;
 import fr.ariouz.gkit.build.image.arg.BuildArgException;
 import fr.ariouz.gkit.build.image.arg.NativeBuildArg;
 import fr.ariouz.gkit.build.image.arg.NativeBuildArgParser;
+import fr.ariouz.gkit.build.image.arg.renderer.AbstractNativeBuildArgRenderer;
 import fr.ariouz.gkit.config.ConfigMerger;
 import fr.ariouz.gkit.config.models.NativeConfig;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NativeBuildArgTest {
+
+	static class TestStringRenderer extends AbstractNativeBuildArgRenderer<String> {
+
+		protected TestStringRenderer() {
+			super(String.class);
+		}
+
+		@Override
+		protected List<String> renderValue(NativeBuildArg arg, String value) {
+			return List.of(value == null ? "" : value);
+		}
+	}
+
+
+	@Test
+	void abstractWrongExpectedType_throwsException() {
+		TestStringRenderer renderer = new TestStringRenderer();
+		assertThatThrownBy(() -> renderer.render(null, List.of(2)))
+		.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	void abstractExpectStringButInteger_isValid() {
+		TestStringRenderer renderer = new TestStringRenderer();
+		assertThat(renderer.render(null, 2)).containsExactly("2");
+	}
 
 	@Test
 	void invalidArgs_throwsBuildArgException() {
@@ -95,6 +122,18 @@ public class NativeBuildArgTest {
 		nativeConfig.setBuildArgs(List.of(
 				Map.of(NativeBuildArg.OPTIMIZATION_LEVEL.getConfigKey(), 2),
 				Map.of(NativeBuildArg.OPTIMIZATION_LEVEL.getConfigKey(), 2)
+		));
+
+		assertThatThrownBy(() -> new NativeBuildArgParser().parseBuildArgs(nativeConfig))
+				.isInstanceOf(BuildArgException.class);
+
+	}
+
+	@Test
+	void parserInvalidArgType_throwsBuildArgException() {
+		NativeConfig nativeConfig = new NativeConfig();
+		nativeConfig.setBuildArgs(List.of(
+				Map.of(NativeBuildArg.INITIALIZE_AT_BUILD_TIME.getConfigKey(), "invalid")
 		));
 
 		assertThatThrownBy(() -> new NativeBuildArgParser().parseBuildArgs(nativeConfig))
